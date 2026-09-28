@@ -35,3 +35,13 @@ zig build run -Doptimize=ReleaseFast -- bench --difficulty 18 --blocks 3
 `
 
 Imprime uma linha JSON com 	otal_ms, hashes e hashes_per_sec (PoW em bits).
+
+
+## Shared library (playground)
+
+```bash
+zig build engine -Doptimize=ReleaseFast
+```
+
+Emite `zig-out/bin/blockchain_engine` (DLL/so) com a C ABI em `include/blockchain_engine.h`.
+Consumida por `finance/api-go`.

@@ -4,14 +4,16 @@ Coleção de demos didáticas de blockchain em várias linguagens, organizadas p
 comparar o **mesmo modelo de prova de trabalho** de forma justa.
 
 ```
-blockchain-demos/          ← raiz do repositório Git
-└── finance/               ← demos (domínio finance)
+blockchain-demos/          # git root
+└── finance/               # demos (finance domain)
     ├── demo-blockchain-with-go/
     ├── demo-blockchain-with-rust/
     ├── demo-blockchain-with-zig/
     ├── demo-blockchain-with-c/
     ├── demo-blockchain-with-asm/
-    └── demo-blockchain-with-python/
+    ├── demo-blockchain-with-python/
+    ├── api-go/            # HTTP playground (Go -> Zig)
+    └── web/               # vinext UI
 ```
 
 Demos sob `finance/`. Este repositório contém apenas esses exemplos.
@@ -212,3 +214,47 @@ Repita com `--difficulty 18 --blocks 3` (Go: `-difficulty 18 -blocks 3`).
 ## Licença / propósito
 
 Material de estudo e benchmark didático — não é uma blockchain de produção.
+
+
+## Playground (vinext + Go API + Zig engine)
+
+UI de transferências para experimentar a cadeia didática:
+
+```
+finance/web/                     vinext (frontend)
+finance/api-go/                  HTTP API em Go (CORS)
+finance/demo-blockchain-with-zig motor (shared lib C ABI)
+```
+
+Fluxo:
+
+```mermaid
+flowchart LR
+  UI[vinext web] -->|HTTP JSON| API[Go api-go]
+  API -->|C ABI / DLL| ZIG[Zig blockchain_engine]
+```
+
+O frontend **não** fala com Zig diretamente. Go só faz gateway (carteiras por nome,
+CORS, JSON); assinatura Ed25519, mempool, Merkle, PoW e validação ficam no Zig.
+
+### Como rodar
+
+```bash
+# 1) motor Zig
+cd finance/demo-blockchain-with-zig
+zig build engine -Doptimize=ReleaseFast
+
+# 2) API Go (Windows: carrega blockchain_engine.dll)
+cd ../api-go
+go run . -addr :8080 -difficulty 12
+
+# 3) frontend
+cd ../web
+bun install
+bun run dev
+```
+
+Detalhes: [finance/api-go/README.md](./finance/api-go/README.md) e
+[finance/web/README.md](./finance/web/README.md).
+
+As demos CLI/bench em `finance/demo-blockchain-with-*` continuam independentes.
