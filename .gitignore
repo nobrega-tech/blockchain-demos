@@ -1,0 +1,76 @@
+# --- Build / release artifacts ---
+*.exe
+*.pdb
+*.obj
+*.o
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+*.out
+
+# --- Rust ---
+**/target/
+**/*.rs.bk
+Cargo.lock.bak
+
+# --- Zig ---
+**/.zig-cache/
+**/zig-out/
+**/.zig-cache/**
+
+# --- C / ASM / CMake ---
+**/build/
+**/cmake-build-*/
+**/CMakeCache.txt
+**/CMakeFiles/
+**/cmake_install.cmake
+**/Makefile.bak
+**/compile_commands.json
+
+# --- Go ---
+**/bin/
+**/vendor/
+*.test
+*.exe~
+go.work
+go.work.sum
+
+# --- Python ---
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.venv/
+**/venv/
+**/ENV/
+**/.Python
+**/*.egg-info/
+**/dist/
+**/build/
+.coverage
+htmlcov/
+
+# --- IDE / OS ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- mise / local env ---
+.mise.local.toml
+.env
+.env.*
+!.env.example
+
+# --- Logs / coverage ---
+*.log
+*.prof
+coverage/

@@ -1,0 +1,18 @@
+[tools]
+zig = "0.16.0"
+
+# Habilita cgo usando o zig como compilador C.
+[env]
+CGO_ENABLED = "1"
+CC = "zig cc -target x86_64-windows-gnu"
+CXX = "zig c++ -target x86_64-windows-gnu"
+
+[tasks.test]
+run = "go test ./..."
+
+# O runtime do race detector (TSan) no Windows precisa de WaitOnAddress/WakeByAddress
+# (api-ms-win-core-synch) e de um endereço de imagem fixo: com ASLR, o lld do zig
+# posiciona o binário onde o TSan quer mapear sua shadow memory.
+[tasks."test:race"]
+env = { CGO_LDFLAGS = "-lapi-ms-win-core-synch-l1-2-0 -Wl,--no-dynamicbase" }
+run = "go test -race ./..."
