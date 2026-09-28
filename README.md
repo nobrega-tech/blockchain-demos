@@ -16,6 +16,47 @@ blockchain-demos/          ← raiz do repositório Git
 
 Demos sob `finance/`. Este repositório contém apenas esses exemplos.
 
+## Arquitetura (visão didática)
+
+Fluxo compartilhado pelas demos em `finance/` e pelo **bench justo**:
+
+```mermaid
+flowchart TB
+  subgraph demos["Demos em finance/"]
+    GO[Go]
+    RS[Rust]
+    ZG[Zig]
+    C[C]
+    ASM[ASM + C]
+    PY[Python]
+  end
+
+  subgraph core["Modelo comum"]
+    W[Wallet / chaves]
+    TX[Transação]
+    MP[Mempool]
+    MR[Merkle root]
+    BH["Block header<br/>index · ts · prev · merkle · nonce"]
+    POW["SHA-256 PoW<br/>prefix cache + bits zero"]
+    CH[Cadeia / Validate]
+  end
+
+  demos --> W
+  W --> TX
+  TX --> MP
+  MP --> MR
+  MR --> BH
+  BH --> POW
+  POW --> CH
+
+  BENCH["Bench justo<br/>mesmos hashes entre langs"]
+  demos --> BENCH
+  POW -.-> BENCH
+```
+
+Coinbase no bench: `from = nil`, `to = pubkey(seed)`, `amount = 50`, `nonce = index`.
+Genesis: `prev = [0;32]`, fora do cronômetro. Por nonce: clona midstate do header e só absorve o `nonce`.
+
 ## Modelo de bench justo
 
 Todas as implementações (no caminho `bench`) usam o **mesmo digest**:
