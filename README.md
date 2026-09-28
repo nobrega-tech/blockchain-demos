@@ -16,7 +16,7 @@ blockchain-demos/          ← raiz do repositório Git
 
 Demos sob `finance/`. Este repositório contém apenas esses exemplos.
 
-Ideias de extensão e projetos novos: [IDEAS.md](./IDEAS.md).
+Ideias de extensão e projetos novos: [IDEAS.md](./IDEAS.md). Texto introdutório: [PAPER.md](./PAPER.md).
 
 ## Arquitetura (visão didática)
 
@@ -98,6 +98,25 @@ Workload justo: LE + Merkle + bits + midstate. **Hash counts idênticos** em tod
 | **C** | 58 | ~4,2 M |
 | **ASM** | ~58 | ~4,1 M |
 | **Python** | 256 | ~0,95 M |
+
+### Recursos (16 bits / 5 blocks) — CPU e RAM
+
+Mesma carga justa (`hashes = 242629`). Medição via amostragem do processo no Windows
+(working set pico; CPU% médio de 1 núcleo quando a amostragem captura o intervalo).
+
+| Impl | total_ms | HPS (aprox.) | CPU% médio | Pico RSS |
+|---|---:|---:|---:|---:|
+| **Zig** | 11 | ~22,1 M | ~1 núcleo\* | ~3,8 MB |
+| **Rust** | 13 | ~17,4 M | ~1 núcleo\* | ~4,9 MB |
+| **Go** | 28 | ~8,5 M | ~90% | ~13,7 MB |
+| **C** | 60 | ~4,0 M | ~98% | ~5,5 MB |
+| **ASM** | 62 | ~3,9 M | ~80% | ~5,5 MB |
+| **Python** | ~263–270 | ~0,90–0,92 M | ~1 núcleo\* | ~5 MB |
+
+\*Runs muito curtos (<~50 ms) ou resolução de tempo de CPU do OS (~15 ms) limitam a
+amostragem: o PoW é single-thread e satura ~1 núcleo; o valor exato de % pode
+aparecer como 0 na amostragem. Prefira `total_ms`/`HPS` para ranking de velocidade
+e RSS para memória.
 
 ### difficulty = 18 bits, blocks = 3, txs_per_block = 0
 
