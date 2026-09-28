@@ -42,8 +42,19 @@ Endereço do minerador no bench (pubkey Ed25519 de seed `[9;32]`):
 
 ## Resultados (após prefix cache)
 
-Medidos em **uma máquina** (desktop **Redragon**, Windows). São **rodadas únicas**,
+Medidos em **uma máquina** (desktop de lab apelidado **Redragon**). São **rodadas únicas**,
 não um estudo científico (sem média/desvio, sem isolamento térmico, etc.).
+
+### Ambiente de medição
+
+| Item | Spec (não confidencial) |
+|---|---|
+| CPU | AMD Ryzen 7 5800X (8 cores / 16 threads, até ~3,8 GHz) |
+| RAM | 16 GB |
+| SO | Microsoft Windows 11 Pro (build 26200), 64 bits |
+| Disco | SSD NVMe (~1 TB) + HDD SATA (~2 TB) disponíveis |
+
+Sem hostname, usuário, seriais, IPs ou chaves — só o necessário para contextualizar o HPS.
 
 Workload justo: LE + Merkle + bits + midstate. **Hash counts idênticos** em todas.
 
