@@ -40,6 +40,40 @@ Endereço do minerador no bench (pubkey Ed25519 de seed `[9;32]`):
 
 `fd1724385aa0c75b64fb78cd602fa1d991fdebf76b13c58ed702eac835e9f618`
 
+## Resultados (após prefix cache)
+
+Medidos em **uma máquina** (desktop **Redragon**, Windows). São **rodadas únicas**,
+não um estudo científico (sem média/desvio, sem isolamento térmico, etc.).
+
+Workload justo: LE + Merkle + bits + midstate. **Hash counts idênticos** em todas.
+
+### difficulty = 16 bits, blocks = 5, txs_per_block = 0
+
+`hashes = 242629` em todas as langs.
+
+| Impl | total_ms | hashes/s (aprox.) |
+|---|---:|---:|
+| **Zig** | 11 | ~22,1 M |
+| **Rust** | 13 | ~17,7 M |
+| **Go** (`-bench`) | 27 | ~8,7 M |
+| **C** | 58 | ~4,2 M |
+| **ASM** | ~58 | ~4,1 M |
+| **Python** | 256 | ~0,95 M |
+
+### difficulty = 18 bits, blocks = 3, txs_per_block = 0
+
+`hashes = 813846` em todas.
+
+| Impl | total_ms | hashes/s (aprox.) |
+|---|---:|---:|
+| **Zig** | ~36–39 | ~21–23 M |
+| **Rust** | ~45–46 | ~17–18 M |
+| **C** | ~194–195 | ~4,2 M |
+| **ASM** | ~199 | ~4,1 M |
+| **Python** | ~869 | ~0,94 M |
+
+(Ordem estável: **Zig ≳ Rust > Go > C ≈ ASM ≫ Python**.)
+
 ## Demos
 
 | Pasta | Linguagem | Notas |
@@ -110,11 +144,12 @@ Repita com `--difficulty 18 --blocks 3` (Go: `-difficulty 18 -blocks 3`).
 
 ## Notas de comparação (honestas)
 
-1. **Hash counts iguais** ⇒ mesmo PoW; compare HPS, não “quem minera mais blocos”.
+1. **Hash counts iguais** (`242629` / `813846`) ⇒ mesmo PoW; compare HPS, não “quem minera mais blocos”.
 2. **Prefix cache** importa: sem midstate, C/ASM/Python reprocessam o header a cada nonce e ficam artificialmente lentos.
-3. Ordem típica de HPS observada: **Zig ≳ Rust ≫ C ≈ ASM ≫ Python**. Go no `-bench` justo fica na faixa do C (digest alinhado).
+3. Ordem típica de HPS: **Zig ≳ Rust > Go > C ≈ ASM ≫ Python**.
 4. A API HTTP do Go (zeros **hex**, hash JSON) **não** é o mesmo workload do bench — use `-bench` para comparar.
 5. `txs_per_block > 0` no C/ASM/Python usa txs dummy sem Ed25519; para paridade use `0`.
+6. Números acima são **one-shot** na Redragon — use-os como ilustração, não como ranking definitivo.
 
 ## Licença / propósito
 
