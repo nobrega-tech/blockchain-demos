@@ -42,19 +42,9 @@ Endereço do minerador no bench (pubkey Ed25519 de seed `[9;32]`):
 
 ## Resultados (após prefix cache)
 
-Medidos em **uma máquina** (desktop de lab apelidado **Redragon**). São **rodadas únicas**,
-não um estudo científico (sem média/desvio, sem isolamento térmico, etc.).
-
-### Ambiente de medição
-
-| Item | Spec (não confidencial) |
-|---|---|
-| CPU | AMD Ryzen 7 5800X (8 cores / 16 threads, até ~3,8 GHz) |
-| RAM | 16 GB |
-| SO | Microsoft Windows 11 Pro (build 26200), 64 bits |
-| Disco | SSD NVMe (~1 TB) + HDD SATA (~2 TB) disponíveis |
-
-Sem hostname, usuário, seriais, IPs ou chaves — só o necessário para contextualizar o HPS.
+Rodadas **únicas** em um desktop de desenvolvimento — **não** são um estudo científico
+(sem média/desvio, sem isolamento térmico, etc.). Os números ilustram a ordem de
+grandeza do HPS com o mesmo workload.
 
 Workload justo: LE + Merkle + bits + midstate. **Hash counts idênticos** em todas.
 
@@ -160,7 +150,7 @@ Repita com `--difficulty 18 --blocks 3` (Go: `-difficulty 18 -blocks 3`).
 3. Ordem típica de HPS: **Zig ≳ Rust > Go > C ≈ ASM ≫ Python**.
 4. A API HTTP do Go (zeros **hex**, hash JSON) **não** é o mesmo workload do bench — use `-bench` para comparar.
 5. `txs_per_block > 0` no C/ASM/Python usa txs dummy sem Ed25519; para paridade use `0`.
-6. Números acima são **one-shot** na Redragon — use-os como ilustração, não como ranking definitivo.
+6. Números acima são **one-shot** em um desktop — use-os como ilustração, não como ranking definitivo.
 
 ## Licença / propósito
 

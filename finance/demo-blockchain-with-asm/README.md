@@ -14,7 +14,6 @@ Mesmo modelo de bench justo que Rust/Zig/Go/C, com **cache do prefixo SHA-256** 
 ## Build
 
 ```bat
-cd D:\Playground\demo-blockchain-with-asm
 zig cc -O3 -std=c11 -DDEMO_USE_ASM_MINE -DDEMO_IMPL_NAME=\"asm\" -Isrc -o demo-blockchain.exe src/sha256.c src/pow_mine.S src/blockchain.c src/main.c
 ```
 
