@@ -18,45 +18,41 @@ Demos sob `finance/`. Este repositório contém apenas esses exemplos.
 
 ## Arquitetura (visão didática)
 
-Fluxo compartilhado pelas demos em `finance/` e pelo **bench justo**:
+Fluxo clássico das demos (mesmo modelo no bench justo):
 
 ```mermaid
-flowchart TB
-  subgraph demos["Demos em finance/"]
-    GO[Go]
-    RS[Rust]
-    ZG[Zig]
-    C[C]
-    ASM[ASM + C]
-    PY[Python]
-  end
+flowchart TD
+  TX[Transaction]
+  W[Wallet / sign]
+  MP[Mempool]
+  BL[Block]
+  MR[Merkle root]
+  HD[Header: index · ts · prev · merkle · nonce]
+  POW[PoW: SHA-256 + nonce até bits zero]
+  CH[Chain]
+  VA[Validate]
 
-  subgraph core["Modelo comum"]
-    W[Wallet / chaves]
-    TX[Transação]
-    MP[Mempool]
-    MR[Merkle root]
-    BH["Block header<br/>index · ts · prev · merkle · nonce"]
-    POW["SHA-256 PoW<br/>prefix cache + bits zero"]
-    CH[Cadeia / Validate]
-  end
-
-  demos --> W
-  W --> TX
-  TX --> MP
-  MP --> MR
-  MR --> BH
-  BH --> POW
+  TX --> W
+  W --> MP
+  MP --> BL
+  BL --> MR
+  MR --> HD
+  HD --> POW
   POW --> CH
-
-  BENCH["Bench justo<br/>mesmos hashes entre langs"]
-  demos --> BENCH
-  POW -.-> BENCH
+  CH --> VA
+  BL -.->|prev_hash| CH
 ```
 
-Coinbase no bench: `from = nil`, `to = pubkey(seed)`, `amount = 50`, `nonce = index`.
-Genesis: `prev = [0;32]`, fora do cronômetro. Por nonce: clona midstate do header e só absorve o `nonce`.
+Implementações do mesmo modelo em `finance/`:
 
+```mermaid
+flowchart LR
+  GO[Go] --- RS[Rust] --- ZG[Zig]
+  ZG --- C[C] --- ASM[ASM] --- PY[Python]
+```
+
+Coinbase no bench: `from = nil`, `to = pubkey(seed)`, `amount = 50`, `nonce = index`.  
+Genesis: `prev = [0;32]`, fora do cronômetro. Por nonce: midstate do header + só o `nonce`.
 ## Modelo de bench justo
 
 Todas as implementações (no caminho `bench`) usam o **mesmo digest**:
