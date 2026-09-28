@@ -16,6 +16,8 @@ blockchain-demos/          ← raiz do repositório Git
 
 Demos sob `finance/`. Este repositório contém apenas esses exemplos.
 
+Ideias de extensão e projetos novos: [IDEAS.md](./IDEAS.md).
+
 ## Arquitetura (visão didática)
 
 Fluxo clássico das demos (mesmo modelo no bench justo):
