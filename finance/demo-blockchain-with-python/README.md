@@ -12,7 +12,6 @@ Demo didática alinhada ao bench justo de Rust/Zig/C/ASM/Go:
 ## Uso
 
 ```bat
-cd D:\Playground\demo-blockchain-with-python
 python __main__.py                 REM demo (dificuldade 12)
 python __main__.py 14
 python __main__.py test

@@ -5,7 +5,7 @@ comparar o **mesmo modelo de prova de trabalho** de forma justa.
 
 ```
 blockchain-demos/          ← raiz do repositório Git
-└── finance/               ← demos de blockchain (domínio finance)
+└── finance/               ← demos (domínio finance)
     ├── demo-blockchain-with-go/
     ├── demo-blockchain-with-rust/
     ├── demo-blockchain-with-zig/
@@ -14,8 +14,7 @@ blockchain-demos/          ← raiz do repositório Git
     └── demo-blockchain-with-python/
 ```
 
-> O diretório `finance/` agrupa estes exemplos. O restante do Playground
-> (ex.: `benchmark-harness`) **não** faz parte deste repositório.
+Demos sob `finance/`. Este repositório contém apenas esses exemplos.
 
 ## Modelo de bench justo
 

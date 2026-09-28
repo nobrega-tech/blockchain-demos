@@ -12,10 +12,9 @@ SHA-256: implementaÃ§Ã£o single-file em `src/sha256.c` (sem OpenSSL).
 
 ## Build (Windows)
 
-Com **zig cc** (recomendado neste playground):
+Com **zig cc** (recomendado):
 
 ```bat
-cd D:\Playground\demo-blockchain-with-c
 zig cc -O3 -std=c11 -DDEMO_IMPL_NAME=\"c\" -Isrc -o demo-blockchain.exe src/sha256.c src/blockchain.c src/main.c
 ```
 
