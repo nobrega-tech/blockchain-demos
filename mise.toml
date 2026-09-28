@@ -1,0 +1,29 @@
+[tools]
+zig = "0.16.0"
+go = "1.26.6"
+bun = "1.3.14"
+
+# Playground: vinext (web) -> Go HTTP (api) -> Zig shared lib (engine)
+
+[tasks.engine]
+description = "Build Zig blockchain_engine shared library (C ABI)"
+dir = "finance/demo-blockchain-with-zig"
+run = "zig build engine -Doptimize=ReleaseFast"
+
+[tasks.api]
+description = "Run Go playground HTTP API (loads Zig engine)"
+depends = ["engine"]
+dir = "finance/api-go"
+run = "go run . -addr :8080 -difficulty 12"
+
+[tasks.web]
+description = "Install deps (if needed) and run vinext playground UI"
+dir = "finance/web"
+run = [
+  "bun install",
+  "bun run dev",
+]
+
+[tasks.playground]
+description = "Build Zig engine, then start API + web in parallel"
+run = "mise run api ::: web"

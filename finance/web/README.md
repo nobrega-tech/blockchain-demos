@@ -15,3 +15,5 @@ bun run dev
 
 Open the vinext URL (usually `http://localhost:3000`).
 Optional: `NEXT_PUBLIC_API_URL=http://127.0.0.1:8080`.
+
+From the repo root: `mise run web` or `mise run playground` (API + UI).

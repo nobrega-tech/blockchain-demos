@@ -239,6 +239,18 @@ CORS, JSON); assinatura Ed25519, mempool, Merkle, PoW e validação ficam no Zig
 
 ### Como rodar
 
+Com [mise](https://mise.jdx.dev/) na raiz do repositório (`mise.toml`):
+
+```bash
+mise run engine       # build da shared lib Zig
+mise run api          # HTTP Go (depende de engine)
+mise run web          # vinext (bun install + dev)
+mise run playground   # api + web em paralelo (api já rebuilda o engine)
+# equivalente: mise run api ::: web
+```
+
+Ou manualmente:
+
 ```bash
 # 1) motor Zig
 cd finance/demo-blockchain-with-zig

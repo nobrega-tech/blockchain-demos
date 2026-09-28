@@ -39,3 +39,5 @@ Optional: `BLOCKCHAIN_ENGINE_DLL` = absolute path to the shared library.
 | GET | `/validate` | Full chain validation |
 
 CORS allows `localhost` / `127.0.0.1` for the vinext frontend.
+
+From the repo root you can also use `mise run api` (builds the Zig engine first) or `mise run playground`.
